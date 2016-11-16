@@ -1,5 +1,7 @@
 package sc.plugin2017;
 
+import sc.plugin2017.gui.renderer.primitives.GuiConstants;
+
 /**
  * Beinhaltet Informationen zum Spielende: Farbe des Gewinners und Gewinngrund.
  *
@@ -16,12 +18,12 @@ public class WinCondition implements Cloneable {
 	 */
 	private final String reason;
 
-	public PlayerColor getWinner() {
-    return winner;
-  }
-
-  public String getReason() {
-    return reason;
+  /**
+   * Erzeugt eine neue Condition, die anzeigt, dass das Spiel noch nicht zu Ende ist.
+   */
+  public WinCondition() {
+    this.winner = null;
+    this.reason = GuiConstants.GAME_NOT_ENDED;
   }
 
   /**
@@ -36,6 +38,16 @@ public class WinCondition implements Cloneable {
 		this.winner = winner;
 		this.reason = reason;
 	}
+
+
+
+  public PlayerColor getWinner() {
+    return winner;
+  }
+
+  public String getReason() {
+    return reason;
+  }
 
 	/**
 	 * klont dieses Objekt

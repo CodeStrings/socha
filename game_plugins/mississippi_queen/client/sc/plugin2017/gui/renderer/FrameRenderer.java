@@ -40,14 +40,13 @@ import sc.plugin2017.gui.renderer.primitives.SideBar;
 import sc.plugin2017.util.InvalidMoveException;
 
 /**
+ * The FrameRenderer is a PApplet (see <a href ="http://processing.github.io/processing-javadocs/core/index.html?processing/core/PApplet.html">Processing</a>)
+ * used for drawing every GUI element of the plugin.
+ *
  * @author soeren
  */
-
 public class FrameRenderer extends PApplet {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = 1L;
   private static final Logger logger = LoggerFactory
       .getLogger(FrameRenderer.class);
@@ -86,7 +85,8 @@ public class FrameRenderer extends PApplet {
     this.progressBar = new ProgressBar(this);
     this.sideBar = new SideBar(this);
     this.boardFrame = new BoardFrame(this);
-    this.stepPossible = new LinkedHashMap<HexField, Action>();
+    this.stepPossible = new LinkedHashMap<>();
+    this.winCondition = new WinCondition();
   }
 
   @Override
@@ -99,10 +99,10 @@ public class FrameRenderer extends PApplet {
     //
     // NOTE that setting the size needs to be the first action of the setup
     // method (as stated in the processing reference).
-    if (RenderConfiguration.optionRenderer.equals("JAVA2D")) {
+    if ("JAVA2D".equals(RenderConfiguration.optionRenderer)) {
       logger.debug("Using Java2D as Renderer");
       size(this.width, this.height, JAVA2D);
-    } else if (RenderConfiguration.optionRenderer.equals("P3D")) {
+    } else if ("P3D".equals(RenderConfiguration.optionRenderer)) {
       logger.debug("Using P3D as Renderer");
       size(this.width, this.height, P3D);
     } else {
@@ -154,10 +154,7 @@ public class FrameRenderer extends PApplet {
   }
 
   public void updateGameState(GameState gameState) {
-    // FIXME: winCondition determines if the game end screen is drawn, when
-    // going back in the replay/game, it has to be cleared. Setting it to null
-    // here works, but there has to be a better way.
-    this.winCondition = null;
+    this.winCondition = new WinCondition();
     try {
       this.currentGameState = gameState.clone();
     } catch (CloneNotSupportedException e) {
@@ -421,7 +418,7 @@ public class FrameRenderer extends PApplet {
   }
 
   public boolean gameActive() {
-    return this.winCondition == null;
+    return GuiConstants.GAME_NOT_ENDED.equals(this.winCondition.getReason());
   }
 
   public List<DebugHint> getCurrentHints() {

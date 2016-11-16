@@ -141,6 +141,8 @@ public class GuiConstants {
   public static final int DEFAULT_RED_POINTS = 0;
   public static final int DEFAULT_BLUE_POINTS = 0;
 
+  public static final String GAME_NOT_ENDED = "Game has not ended yet.";
+
   /*
    * Fonts
    * Wird OpenGL als Renderer genutzt, dann wird Text unscharf
