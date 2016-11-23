@@ -52,6 +52,7 @@ public class RenderFacade {
 
 		@Override
 		public void run() {
+		  logger.debug("run called");
 			while (receiverThreadRunning) {
 
 				try {
@@ -76,6 +77,7 @@ public class RenderFacade {
 					logger.error("Exception in render thread", e);
 				}
 			}
+			logger.debug("run finished");
 		}
 	};
 	private GameState lastGameState;
@@ -127,6 +129,7 @@ public class RenderFacade {
 	}
 
 	public void setRenderContext(final Panel panel) {
+	  logger.debug("setRenderContext called");
 
 		synchronized (gameStateQueue) {
 			gameStateQueue.clear();
@@ -142,6 +145,7 @@ public class RenderFacade {
 		  // panel == null means that no display should be done (testrange)
       initRenderer();
 		}
+    logger.debug("setRenderContext finished");
   }
 
 	private void initRenderer() {
@@ -196,6 +200,8 @@ public class RenderFacade {
 	}
 
 	private void updateGameState(final GameState gameState, boolean force) {
+	  logger.debug("updateGameState called, disabled = {}, force = {}", disabled, force);
+	  logger.debug("size of gamestateQueue: {}", gameStateQueue.size());
 		if (disabled) {
 			return;
 		}
@@ -207,8 +213,10 @@ public class RenderFacade {
 				first = false;
 				maxTurn = Math.max(maxTurn, gameState.getTurn());
 				lastGameState = gameState;
-				gameStateQueue.notifyAll();
+	      gameStateQueue.notifyAll();
 			}
+	    logger.debug("size of gamestateQueue: {}", gameStateQueue.size());
+	    logger.debug("updateGameState finished");
 		}
 	}
 

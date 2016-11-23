@@ -92,6 +92,10 @@ public class FrameRenderer extends PApplet {
   @Override
   public void setup() {
     super.setup();
+    // this is the default initial values for the FrameRenderer
+    // FIXME this is a small hack for at least getting the default size to work
+    this.size(1024, 622);
+    logger.debug("default height: {}, width = {}", this.DEFAULT_HEIGHT, this.DEFAULT_WIDTH);
     logger.debug("Dimension when creating board: (" + this.width + ","
         + this.height + ")");
     // choosing renderer from options - using P2D as default (currently it seems
@@ -154,6 +158,7 @@ public class FrameRenderer extends PApplet {
   }
 
   public void updateGameState(GameState gameState) {
+    logger.debug("updateGameState called");
     // FIXME: winCondition determines if the game end screen is drawn, when
     // going back in the replay/game, it has to be cleared. Setting it to null
     // here works, but there has to be a better way.
