@@ -1,5 +1,9 @@
 package sc.plugin2017.gui.renderer.primitives;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import sc.plugin2017.Action;
 import sc.plugin2017.DebugHint;
 import sc.plugin2017.PlayerColor;
@@ -23,6 +27,9 @@ public class SideBar extends PrimitiveBase {
   private double baseFontSize;
   private String referenceString = "Dieser Text sollte passen.";
 
+  private static final Logger logger = LoggerFactory
+  .getLogger(SideBar.class);
+
   public SideBar(FrameRenderer parent) {
     super(parent);
     this.parent = parent;
@@ -37,18 +44,16 @@ public class SideBar extends PrimitiveBase {
 
     // calculate maximum font size to fit longest player name, or, if that is
     // shorter than the reference string, fit the reference string into sidebar
-    double maxTextWidth = width * 0.9;
     String longestPlayerName;
-    if (redName.length() > blueName.length()) {
+    if (parent.textWidth(redName) > parent.textWidth(blueName)) {
       longestPlayerName = redName;
     } else {
       longestPlayerName = blueName;
     }
-    if (longestPlayerName.length() > referenceString.length()) {
+    if (parent.textWidth(longestPlayerName) > parent.textWidth(referenceString)) {
       referenceString = longestPlayerName;
     }
     parent.textSize(10);
-    baseFontSize = maxTextWidth / parent.textWidth(referenceString) * 10;
   }
 
   public void update(PlayerColor currentColor) {
@@ -66,6 +71,8 @@ public class SideBar extends PrimitiveBase {
     parent.pushMatrix();
     width = parent.getWidth() * GuiConstants.SIDE_BAR_WIDTH;
     height = parent.getHeight() * GuiConstants.SIDE_BAR_HEIGHT;
+    double maxTextWidth = width * 0.9;
+    baseFontSize = maxTextWidth / parent.textWidth(referenceString) * 10;
     parent.translate((float) (parent.getWidth() * GuiConstants.SIDE_BAR_START_X),
         (float) GuiConstants.SIDE_BAR_START_Y);
     parent.rect(0, 0, (float) width, (float) height);
@@ -81,7 +88,7 @@ public class SideBar extends PrimitiveBase {
       parent.fill(GuiConstants.colorBlack);
     }
 
-    parent.translate(20, parent.textAscent() + 20);
+    parent.translate((float) ((width - maxTextWidth) / 2.0 - GuiConstants.frameBorderSize), parent.textAscent() + 20);
     parent.text(redName, 0, 0);
 
     // Punkte

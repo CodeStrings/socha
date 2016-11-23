@@ -20,8 +20,7 @@
   </appender>
 	<!-- all loggers in DEBUG for now...  -->
   <logger name="sc" level="WARN" />
-  <logger name="sc.plugin2017.gui.renderer.primitives.GuiBoard" level="DEBUG" />
-  <logger name="sc.plugin2017.gui.renderer.FrameRenderer" level="DEBUG" />
+  <logger name="sc.plugin2017.gui.renderer.primitives.SideBar" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
