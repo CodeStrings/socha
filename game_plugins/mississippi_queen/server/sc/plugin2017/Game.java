@@ -17,6 +17,7 @@ import sc.api.plugins.exceptions.TooManyPlayersException;
 import sc.api.plugins.host.GameLoader;
 import sc.framework.plugins.ActionTimeout;
 import sc.framework.plugins.RoundBasedGameInstance;
+import sc.plugin2017.gui.renderer.primitives.GuiConstants;
 import sc.plugin2017.util.Configuration;
 import sc.plugin2017.util.Constants;
 import sc.plugin2017.util.InvalidMoveException;
@@ -240,12 +241,12 @@ public class Game extends RoundBasedGameInstance<Player> {
       }
       return new WinCondition(winner, "Das Spiel ist vorzeitig zu Ende.\nEin Spieler wurde abgehängt.");
     }
-    return null;
+    return new WinCondition();
 	}
 
 	@Override
 	protected boolean checkGameOverCondition() {
-	  return checkWinCondition() != null;
+	  return checkWinCondition().getReason() != GuiConstants.GAME_NOT_ENDED;
 	}
 
 	@Override
