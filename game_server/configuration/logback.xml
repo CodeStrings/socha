@@ -23,6 +23,7 @@
   <logger name="sc.plugin2017.gui.renderer.FrameRenderer" level="DEBUG" />
   <logger name="sc.plugin2017.gui.renderer.RenderFacade" level="DEBUG" />
   <logger name="sc.plugin2017.AbstractClient" level="DEBUG" />
+  <logger name="sc.plugin2017.Game" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

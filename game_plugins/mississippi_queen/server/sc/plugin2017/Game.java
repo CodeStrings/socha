@@ -225,6 +225,7 @@ public class Game extends RoundBasedGameInstance<Player> {
       } else if (stats[0][0] < stats[1][0]) {
         winner = PlayerColor.BLUE;
       }
+      logger.debug("Winner is: {}",winner);
       return new WinCondition(winner, "Das Rundenlimit wurde erreicht.");
     } else if (checkGoalReached() != null) {
       // one player reached the goal
