@@ -21,7 +21,7 @@ public class GameEndedDialog {
     }
     // message für endefenster
     String msg = "Das Spiel ist zu Ende!";
-    String message = "Das Spiel ging unendschieden aus!";
+    String message = "Das Spiel ging unentschieden aus!";
     if (condition.getWinner() != null) {
       message = winningPlayerName + " hat gewonnen!";
     }
