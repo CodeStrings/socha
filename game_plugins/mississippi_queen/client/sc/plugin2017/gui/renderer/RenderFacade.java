@@ -277,8 +277,7 @@ public class RenderFacade {
 		if (data == null) {
 		  // no result data, can't do much useful other than setting the win condition to signal that the game ended
 			logger.debug("gameEnded no result. winner, message is {}", errorMessage);
-      return;
-//			frameRenderer.endGame(new WinCondition(null, errorMessage));
+			frameRenderer.endGame(new WinCondition(null, errorMessage));
 		} else {
 		  // analyze result data to display a sensible reason for the game end
 		  StringBuilder reason = new StringBuilder(50);
