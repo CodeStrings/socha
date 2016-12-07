@@ -154,6 +154,12 @@ public class RenderFacade {
     frameRenderer.init();
     panel.add(frameRenderer, BorderLayout.CENTER);
     panel.revalidate();
+    try {
+      Thread.sleep(500);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     panel.repaint();
 	}
 

@@ -187,6 +187,12 @@ public class ContextDisplay extends JPanel implements INewTurnListener {
 		this.add(gameField, BorderLayout.CENTER);
 		this.add(buttonBar, BorderLayout.PAGE_END);
 		this.revalidate();
+	    try {
+	        Thread.sleep(500);
+	      } catch (InterruptedException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	      }
 		this.repaint();
 		logger.debug("dimensions of game field: {},{}", gameField.getWidth(), gameField.getHeight());
 
