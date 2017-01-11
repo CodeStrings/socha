@@ -1,5 +1,6 @@
 package sc.plugin2017;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -132,17 +133,17 @@ public class Game extends RoundBasedGameInstance<Player> {
 		for (Entry<IPlayer, PlayerScore> entry : res.entrySet()) {
 			PlayerScore score = entry.getValue();
 
-			if (entry.getKey() == player) {
-				score.setCause(cause);
-			}
-			
-			// TODO 
 //			if (entry.getKey() == player) {
-//        score.setCause(cause);
-//        score.setValueAt(0, new BigDecimal(0));
-//      } else {
-//        score.setValueAt(0, new BigDecimal(2));
-//      }
+//				score.setCause(cause);
+//			}
+			
+			// FIXME this should fix the problem that client wins on disconnect, this doesn't fix the gui for this problem 
+			if (entry.getKey() == player) {
+        score.setCause(cause);
+        score.setValueAt(0, new BigDecimal(0));
+      } else {
+        score.setValueAt(0, new BigDecimal(2));
+      }
 		}
 
 		notifyOnGameOver(res);
