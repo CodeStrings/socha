@@ -133,8 +133,9 @@ public class Game extends RoundBasedGameInstance<Player>
     int matchPoints = Constants.DRAW_SCORE;
     WinCondition winCondition = checkWinCondition();
     String reason = null;
-    Player opponent = player.getPlayerColor().opponent() == PlayerColor.BLUE ? this.gameState.getBluePlayer()
-        : this.gameState.getRedPlayer();
+    Player opponent = gameState.getOpponent(player);
+//    Player opponent = player.getPlayerColor().opponent() == PlayerColor.BLUE ? this.gameState.getBluePlayer()
+//        : this.gameState.getRedPlayer();
     if (winCondition != null) {
       reason = winCondition.getReason();
       if(player.getPlayerColor().equals(winCondition.getWinner())) {

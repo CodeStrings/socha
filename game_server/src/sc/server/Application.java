@@ -77,18 +77,24 @@ public final class Application
 				.addStringOption("plugins");
 		CmdLineParser.Option loadGameFileOption = parser.addStringOption("loadGameFile");
     CmdLineParser.Option turnOfLoadOption = parser.addIntegerOption("turn");
+    CmdLineParser.Option saveAllReplays = parser.addBooleanOption("saveReplays");
 		parser.parse(params);
 
 		Boolean debugMode = (Boolean) parser.getOptionValue(debug, false);
 		String path = (String) parser.getOptionValue(pluginDirectory, null);
 		String loadGameFile = (String) parser.getOptionValue(loadGameFileOption, null);
 		Integer turnOfLoad = (Integer) parser.getOptionValue(turnOfLoadOption, 0);
+		Boolean saveReplays = (Boolean) parser.getOptionValue(saveAllReplays, false);
 		if (loadGameFile != null) {
 			Configuration.set("loadGameFile", loadGameFile);
 			if (turnOfLoad != 0) {
 			  Configuration.set("turnOfLoad", turnOfLoad.toString());
       }
 		}
+		if (saveReplays) {
+		  Configuration.set("saveReplays", "always");
+		  logger.info("Saving all replays");
+    }
 
 		if (debugMode)
 		{

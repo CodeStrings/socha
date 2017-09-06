@@ -1,5 +1,6 @@
 package sc.server.gaming;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.thoughtworks.xstream.XStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,14 +16,21 @@ import sc.api.plugins.IGameInstance;
 import sc.api.plugins.exceptions.RescuableClientException;
 import sc.api.plugins.exceptions.TooManyPlayersException;
 import sc.api.plugins.host.IGameListener;
+import sc.api.plugins.host.ReplayBuilder;
 import sc.framework.plugins.RoundBasedGameInstance;
 import sc.framework.plugins.SimplePlayer;
+import sc.networking.INetworkInterface;
+import sc.networking.clients.LobbyClient;
+import sc.networking.clients.ObservingClient;
+import sc.networking.clients.ReplayClient;
+import sc.networking.clients.XStreamClient;
 import sc.protocol.responses.GamePausedEvent;
 import sc.protocol.responses.JoinGameResponse;
 import sc.protocol.responses.LeftGameEvent;
 import sc.protocol.responses.MementoPacket;
 import sc.protocol.responses.ObservationResponse;
 import sc.protocol.responses.RoomPacket;
+import sc.server.Configuration;
 import sc.server.network.Client;
 import sc.server.network.DummyClient;
 import sc.server.network.IClient;
@@ -416,11 +425,27 @@ public class GameRoom implements IGameListener
 				syncSlot(slot);
 			}
 		}
-
-		setStatus(GameStatus.ACTIVE);
-
-		this.game.start();
-
+    // TODO add observer if specified, who should save the replay
+    if (Configuration.get("saveReplays") == "always") {
+      logger.debug("Saving replay");
+      ObservingClient observer;
+      LobbyClient observingClient;
+      try {
+        observingClient = new LobbyClient(Configuration.getXStream());
+        observer = new ObservingClient(observingClient, this.id);
+        observingClient.observe(this.getId());
+        setStatus(GameStatus.ACTIVE);
+        this.game.start();
+//        String replayFilename = HelperMethods
+//                .generateReplayFilename(plugin, descriptors);
+//        add to onGameEnded for replay-observer ReplayBuilder.saveReplay(Configuration.getXStream(), observer, new FileOutputStream("./replays/test.xml"));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    } else {
+      setStatus(GameStatus.ACTIVE);
+      this.game.start();
+    }
 		logger.info("Started the game.");
 	}
 
