@@ -229,6 +229,7 @@ public abstract class XStreamClient {
   }
 
   protected void onDisconnect(DisconnectCause cause) {
+    // XXX why is this method empty?
   }
 
   public DisconnectCause getDisconnectCause() {
