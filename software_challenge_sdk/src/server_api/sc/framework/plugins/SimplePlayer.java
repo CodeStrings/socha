@@ -81,6 +81,7 @@ public abstract class SimplePlayer
 		{
 			listener.onPlayerEvent(o);
 		}
+		// TODO notify observers
 	}
 
 	public void requestMove()

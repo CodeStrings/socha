@@ -310,7 +310,7 @@ public abstract class RoundBasedGameInstance<P extends SimplePlayer> implements 
    */
   public void catchInvalidMove(InvalidMoveException e, SimplePlayer author) throws GameLogicException {
     author.setViolated(true);
-    String err = "Ungueltiger Zug von '" + author.getDisplayName() + "'.\n" + e.getMessage();
+    String err = "Ungueltiger Zug von '" + author.getDisplayName() + "'.\n" + e.getMessage() + "\n" + e.getMove();
     author.setViolationReason(e.getMessage());
     logger.error(err, e);
     author.notifyListeners(new ProtocolErrorMessage(e.getMove(), err));

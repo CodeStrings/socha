@@ -54,7 +54,10 @@ public class Logic implements IGameHandler {
    */
   @Override
   public void onRequestAction() {
-    long startTime = System.nanoTime();
+    ArrayList<Action> actions = new ArrayList<>();
+    actions.add(new Skip());
+    sendAction(new Move(actions));
+    /*long startTime = System.nanoTime();
     log.info("Es wurde ein Zug angefordert.");
     ArrayList<Move> possibleMove = gameState.getPossibleMoves(); // Enthält mindestens ein Element
     ArrayList<Move> saladMoves = new ArrayList<>();
@@ -94,7 +97,7 @@ public class Logic implements IGameHandler {
             selectedMoves.add(move);
           }
         } else if (action instanceof FallBack) {
-          if (index > 56 /*letztes Salatfeld*/ && currentPlayer.getSalads() > 0) {
+          if (index > 56  && currentPlayer.getSalads() > 0) {
             // Falle nur am Ende (index > 56) zurück, außer du musst noch einen Salat loswerden
             selectedMoves.add(move);
           } else if (index <= 56 && index - gameState.getPreviousFieldByType(FieldType.HEDGEHOG, index) < 5) {
@@ -126,7 +129,7 @@ public class Logic implements IGameHandler {
     log.info("Sende zug {}", move);
     long nowTime = System.nanoTime();
     sendAction(move);
-    log.warn("Time needed for turn: {}", (nowTime - startTime) / 1000000);
+    log.warn("Time needed for turn: {}", (nowTime - startTime) / 1000000);*/
   }
 
   /**
