@@ -98,7 +98,7 @@ public class TestClient extends XStreamClient {
     }
     // TODO make static method in sdk for methods like this
     try {
-      logger.error("loading server.properties");
+      logger.info("loading server.properties");
       Configuration.load(new FileReader("server.properties"));
     } catch (IOException e) {
       logger.error("Could not find server.properties");
